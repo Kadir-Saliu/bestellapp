@@ -25,6 +25,8 @@ let myDishes = [
   },
 ];
 
+let basketCarts = [];
+
 
 
 function renderNotes() {
@@ -32,6 +34,7 @@ function renderNotes() {
   contentRef.innerHTML = "";
   for (let indexNote = 0; indexNote < myDishes.length; indexNote++) {
     contentRef.innerHTML += getNoteTemplate(indexNote);
+    
   }
 }
 
@@ -43,7 +46,7 @@ function getNoteTemplate(indexNote) {
             <p> <strong> Beschreibung: </strong> ${myDishes[indexNote].description}</p>
         </div>
             <div>
-            <button id="add-to-basket-${indexNote}">+</button>
+            <button onclick="NoteToBasket(${indexNote})" >+</button>
             </div>
 
          </div>`;
@@ -51,9 +54,9 @@ function getNoteTemplate(indexNote) {
 
 
 function renderBasket() {
-    let contentRef = document.getElementById("content");
+    let contentRef = document.getElementById('basket-cart-container');
     contentRef.innerHTML = "";
-    for (let indexBasket = 0; indexBasket < myDishes.length; indexBasket++) {
+    for (let indexBasket = 0; indexBasket < basketCarts.length; indexBasket++) {
       contentRef.innerHTML += getBasketTemplate(indexBasket);
     }
   }
@@ -62,13 +65,18 @@ function renderBasket() {
     return `<div class="menu" >
           <div>
               <h3> ${myDishes[indexBasket].name}</h3>
-              <p> <strong> Preis: </strong> ${myDishes[indexBasket].price} €</p>
+              <p> ${myDishes[indexBasket].price} €</p>
               <p> ${myDishes[indexBasket].description}</p>
           </div>
              
            </div>`;
   }
 
-function addNoteToBasket(indexNote) {
-    let changeNote = document.getElementById(``)
-}
+function NoteToBasket(indexNote) {
+    let basketCart = myDishes.splice(indexNote,0)
+    console.log(basketCart);
+    
+    basketCarts.push(basketCart);
+    
+    renderBasket()
+  }
