@@ -27,18 +27,15 @@ let myDishes = [
 
 let basketCarts = [];
 
-
-
-function renderNotes() {
+function renderInformation() {
   let contentRef = document.getElementById("content");
   contentRef.innerHTML = "";
   for (let indexNote = 0; indexNote < myDishes.length; indexNote++) {
-    contentRef.innerHTML += getNoteTemplate(indexNote);
-    
+    contentRef.innerHTML += getInformationTemplate(indexNote);
   }
 }
 
-function getNoteTemplate(indexNote) {
+function getInformationTemplate(indexNote) {
   return `<div class="menu" >
         <div>
             <h3> ${myDishes[indexNote].name}</h3>
@@ -46,37 +43,39 @@ function getNoteTemplate(indexNote) {
             <p> <strong> Beschreibung: </strong> ${myDishes[indexNote].description}</p>
         </div>
             <div>
-            <button onclick="NoteToBasket(${indexNote})" >+</button>
+            <button onclick="informationToBasket(${indexNote})" >+</button>
             </div>
 
          </div>`;
 }
 
-
 function renderBasket() {
-    let contentRef = document.getElementById('basket-cart-container');
-    contentRef.innerHTML = "";
-    for (let indexBasket = 0; indexBasket < basketCarts.length; indexBasket++) {
-      contentRef.innerHTML += getBasketTemplate(indexBasket);
-    }
+  let contentRef = document.getElementById("basket-cart-container");
+  contentRef.innerHTML = "";
+  for (let indexBasket = 0; indexBasket < basketCarts.length; indexBasket++) {
+    contentRef.innerHTML += getBasketTemplate(indexBasket);
   }
-  
-  function getBasketTemplate(indexBasket) {
-    return `<div class="menu" >
+}
+
+function getBasketTemplate(indexBasket) {
+  return `<div class="basket-menu" >
           <div>
-              <h3> ${myDishes[indexBasket].name}</h3>
-              <p> ${myDishes[indexBasket].price} €</p>
-              <p> ${myDishes[indexBasket].description}</p>
+              <h3> ${basketCarts[indexBasket].name}</h3>
+              <p> ${basketCarts[indexBasket].price} €</p>
+              <p> ${basketCarts[indexBasket].description}</p>
           </div>
              
            </div>`;
-  }
+}
 
-function NoteToBasket(indexNote) {
-    let basketCart = myDishes.splice(indexNote,0)
-    console.log(basketCart);
-    
-    basketCarts.push(basketCart);
-    
-    renderBasket()
-  }
+function informationToBasket(indexNote) {
+  let basketCart = myDishes[indexNote];
+  console.log(myDishes[indexNote]);
+
+  basketCarts.push(basketCart);
+  console.log(basketCarts);
+  renderBasket();
+}
+
+
+
