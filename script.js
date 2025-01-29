@@ -58,24 +58,52 @@ function renderBasket() {
 }
 
 function getBasketTemplate(indexBasket) {
-  return `<div class="basket-menu" >
+  return `
+          
+  <div  class="basket-menu" >
+          <button onclick="minusAmmountPrice(${indexBasket})">-</button>
           <div>
+              <p id="ammountPriceUp"> ${basketCarts[indexBasket].ammount} x</p>
               <h3> ${basketCarts[indexBasket].name}</h3>
-              <p> ${basketCarts[indexBasket].price} €</p>
+              <p id="changePrice"> ${basketCarts[indexBasket].price} €</p>
               <p> ${basketCarts[indexBasket].description}</p>
           </div>
+            <button onclick="plusAmmountPrice(${indexBasket})" >+</button>
              
-           </div>`;
+  </div>`;
 }
 
 function informationToBasket(indexNote) {
   let basketCart = myDishes[indexNote];
-  console.log(myDishes[indexNote]);
-
   basketCarts.push(basketCart);
-  console.log(basketCarts);
   renderBasket();
 }
 
+function checkBasketInformation(indexBasket) {
+  if (basketCarts[indexBasket].name == basketCarts[indexBasket].name) {
+    basketCarts[indexBasket].ammount += 1;
+  }
+  renderBasket();
+}
 
+function plusAmmountPrice(indexBasket) {
+  let contetRef = document.getElementById("ammountPriceUp");
+  basketCarts[indexBasket].ammount = basketCarts[indexBasket].ammount + 1;
+  contetRef.innerHTML = ` ${basketCarts[indexBasket].ammount} x`;
 
+  let currentPrice = document.getElementById("changePrice");
+  currentPrice.innerHTML = "";
+  let sum = basketCarts[indexBasket].ammount * basketCarts[indexBasket].price;
+  currentPrice.innerHTML = sum + "€";
+}
+
+function minusAmmountPrice(indexBasket) {
+  let contetRef = document.getElementById("ammountPriceUp");
+  basketCarts[indexBasket].ammount = basketCarts[indexBasket].ammount - 1;
+  contetRef.innerHTML = `  <p>${basketCarts[indexBasket].ammount} x </p>`;
+
+  let currentPrice = document.getElementById("changePrice");
+  currentPrice.innerHTML = "";
+  let sum = basketCarts[indexBasket].price / basketCarts[indexBasket].ammount;
+  currentPrice.innerHTML = sum + "€";
+}

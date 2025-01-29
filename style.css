@@ -100,13 +100,14 @@ header {
 }
 
 .menu:hover {
-  background-color: #e60707;
+  background-color: red;
 }
 
 .basket-menu {
   background-color: orange;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+  align-items: center;
   padding: 10px;
   margin: 10px;
 }
