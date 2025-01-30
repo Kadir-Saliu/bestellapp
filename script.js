@@ -94,7 +94,7 @@ function plusAmmountPrice(indexBasket) {
   let currentPrice = document.getElementById("changePrice");
   currentPrice.innerHTML = "";
   let sum = basketCarts[indexBasket].ammount * basketCarts[indexBasket].price;
-  currentPrice.innerHTML = sum + "€";
+  currentPrice.innerHTML += sum + "€";
 }
 
 function minusAmmountPrice(indexBasket) {
@@ -102,8 +102,17 @@ function minusAmmountPrice(indexBasket) {
   basketCarts[indexBasket].ammount = basketCarts[indexBasket].ammount - 1;
   contetRef.innerHTML = `  <p>${basketCarts[indexBasket].ammount} x </p>`;
 
+  
+
   let currentPrice = document.getElementById("changePrice");
   currentPrice.innerHTML = "";
-  let sum = basketCarts[indexBasket].price / basketCarts[indexBasket].ammount;
-  currentPrice.innerHTML = sum + "€";
+  let sum = basketCarts[indexBasket].ammount * basketCarts[indexBasket].price;
+  currentPrice.innerHTML += sum + "€";
+
+  if (basketCarts[indexBasket].ammount < 1) {
+    let basketCart = basketCarts[indexBasket];
+    basketCarts.splice(basketCart, 1);
+    console.log(basketCarts[indexBasket]);
+    renderBasket();
+  } 
 }
