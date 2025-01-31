@@ -1,31 +1,33 @@
 let myDishes = [
   {
     name: "Pizza Krabben",
-    price: 9.5,
+    price: 9.50,
     description: "Mit Krabben ",
     ammount: 1,
   },
   {
     name: "Pizza Margherita",
-    price: 5.9,
+    price: 5.90,
     description: "mit Mozarella ",
     ammount: 1,
   },
   {
     name: "Pizza Diavolo (scharf)",
-    price: 8.5,
+    price: 8.50,
     description: "mit Salami, Zwieblen, Peperoni und Knoblauch ",
     ammount: 1,
   },
   {
     name: "Pizzabrötchen",
-    price: 12.9,
+    price: 12.90,
     description: "mit Pizzabrötchen ",
     ammount: 1,
   },
 ];
 
 let basketCarts = [];
+
+let deliveryPrice = [];  
 
 function renderInformation() {
   let contentRef = document.getElementById("content");
@@ -63,9 +65,9 @@ function getBasketTemplate(indexBasket) {
   <div  class="basket-menu" >
           <button onclick="minusAmmountPrice(${indexBasket})">-</button>
           <div>
-              <p id="ammountPriceUp"> ${basketCarts[indexBasket].ammount} x</p>
+              <p id="ammountPriceUp${indexBasket}"> ${basketCarts[indexBasket].ammount} x</p>
               <h3> ${basketCarts[indexBasket].name}</h3>
-              <p id="changePrice"> ${basketCarts[indexBasket].price} €</p>
+              <p id='changePrice${indexBasket}'> ${basketCarts[indexBasket].price} €</p>
               <p> ${basketCarts[indexBasket].description}</p>
           </div>
             <button onclick="plusAmmountPrice(${indexBasket})" >+</button>
@@ -77,34 +79,30 @@ function informationToBasket(indexNote) {
   let basketCart = myDishes[indexNote];
   basketCarts.push(basketCart);
   renderBasket();
+ 
 }
 
-function checkBasketInformation(indexBasket) {
-  if (basketCarts[indexBasket].name == basketCarts[indexBasket].name) {
-    basketCarts[indexBasket].ammount += 1;
-  }
-  renderBasket();
-}
+
 
 function plusAmmountPrice(indexBasket) {
-  let contetRef = document.getElementById("ammountPriceUp");
+  let contetRef = document.getElementById(`ammountPriceUp${indexBasket}`);
   basketCarts[indexBasket].ammount = basketCarts[indexBasket].ammount + 1;
-  contetRef.innerHTML = ` ${basketCarts[indexBasket].ammount} x`;
+  contetRef.innerHTML = `  <p>${basketCarts[indexBasket].ammount} x </p>`;
 
-  let currentPrice = document.getElementById("changePrice");
+  let currentPrice = document.getElementById(`changePrice${indexBasket}`);
   currentPrice.innerHTML = "";
   let sum = basketCarts[indexBasket].ammount * basketCarts[indexBasket].price;
-  currentPrice.innerHTML += sum + "€";
+  sum.toFixed(2)
+  currentPrice.innerHTML = sum + " €";
+  
 }
 
 function minusAmmountPrice(indexBasket) {
-  let contetRef = document.getElementById("ammountPriceUp");
+  let contetRef = document.getElementById(`ammountPriceUp${indexBasket}`);
   basketCarts[indexBasket].ammount = basketCarts[indexBasket].ammount - 1;
   contetRef.innerHTML = `  <p>${basketCarts[indexBasket].ammount} x </p>`;
 
-  
-
-  let currentPrice = document.getElementById("changePrice");
+  let currentPrice = document.getElementById(`changePrice${indexBasket}`);
   currentPrice.innerHTML = "";
   let sum = basketCarts[indexBasket].ammount * basketCarts[indexBasket].price;
   currentPrice.innerHTML += sum + "€";
@@ -114,5 +112,5 @@ function minusAmmountPrice(indexBasket) {
     basketCarts.splice(basketCart, 1);
     console.log(basketCarts[indexBasket]);
     renderBasket();
-  } 
+  }
 }
