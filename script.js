@@ -1,33 +1,31 @@
-let myDishes = [
+ let myDishes = [
   {
     name: "Pizza Krabben",
     price: 9.50,
     description: "Mit Krabben ",
-    ammount: 1,
   },
   {
     name: "Pizza Margherita",
-    price: 5.90,
+    price: 6.00,
     description: "mit Mozarella ",
-    ammount: 1,
   },
   {
     name: "Pizza Diavolo (scharf)",
     price: 8.50,
     description: "mit Salami, Zwieblen, Peperoni und Knoblauch ",
-    ammount: 1,
   },
   {
     name: "Pizzabrötchen",
-    price: 12.90,
+    price: 13.00,
     description: "mit Pizzabrötchen ",
-    ammount: 1,
   },
 ];
 
+let dessert = [];
+
 let basketCarts = [];
 
-let deliveryPrice = [];  
+let finalSum = [];  
 
 function renderInformation() {
   let contentRef = document.getElementById("content");
@@ -45,7 +43,7 @@ function getInformationTemplate(indexNote) {
             <p> <strong> Beschreibung: </strong> ${myDishes[indexNote].description}</p>
         </div>
             <div>
-            <button onclick="informationToBasket(${indexNote})" >+</button>
+            <button onclick="addToBasket(${indexNote})" >+</button>
             </div>
 
          </div>`;
@@ -65,9 +63,9 @@ function getBasketTemplate(indexBasket) {
   <div  class="basket-menu" >
           <button onclick="minusAmmountPrice(${indexBasket})">-</button>
           <div>
-              <p id="ammountPriceUp${indexBasket}"> ${basketCarts[indexBasket].ammount} x</p>
+              <p id="ammountPriceUp${indexBasket}"> ${basketCarts[indexBasket].amount} x</p>
               <h3> ${basketCarts[indexBasket].name}</h3>
-              <p id='changePrice${indexBasket}'> ${basketCarts[indexBasket].price} €</p>
+              <p id='changePrice${indexBasket}'> ${basketCarts[indexBasket].price * basketCarts[indexBasket].amount} €</p>
               <p> ${basketCarts[indexBasket].description}</p>
           </div>
             <button onclick="plusAmmountPrice(${indexBasket})" >+</button>
@@ -75,23 +73,39 @@ function getBasketTemplate(indexBasket) {
   </div>`;
 }
 
-function informationToBasket(indexNote) {
-  let basketCart = myDishes[indexNote];
-  basketCarts.push(basketCart);
+
+
+function addToBasket(indexNote) {
+  let dishName = myDishes[indexNote]['name']
+  const dishBasketIndex = basketCarts.findIndex((dish) => {
+      return dish.name === dishName;
+  });
+
+  if(dishBasketIndex !== -1) {
+    basketCarts[dishBasketIndex]['amount']++
+  } else {
+    let newDish = {
+      name: myDishes[indexNote]['name'],
+      description: myDishes[indexNote]['description'],
+      price: myDishes[indexNote]['price'],
+      amount: 1
+    }
+    basketCarts.push(newDish)
+  }
   renderBasket();
- 
 }
+
 
 
 
 function plusAmmountPrice(indexBasket) {
   let contetRef = document.getElementById(`ammountPriceUp${indexBasket}`);
-  basketCarts[indexBasket].ammount = basketCarts[indexBasket].ammount + 1;
-  contetRef.innerHTML = `  <p>${basketCarts[indexBasket].ammount} x </p>`;
+  basketCarts[indexBasket].amount = basketCarts[indexBasket].amount + 1;
+  contetRef.innerHTML = `  <p>${basketCarts[indexBasket].amount} x </p>`;
 
   let currentPrice = document.getElementById(`changePrice${indexBasket}`);
   currentPrice.innerHTML = "";
-  let sum = basketCarts[indexBasket].ammount * basketCarts[indexBasket].price;
+  let sum = basketCarts[indexBasket].amount * basketCarts[indexBasket].price;
   sum.toFixed(2)
   currentPrice.innerHTML = sum + " €";
   
@@ -99,18 +113,20 @@ function plusAmmountPrice(indexBasket) {
 
 function minusAmmountPrice(indexBasket) {
   let contetRef = document.getElementById(`ammountPriceUp${indexBasket}`);
-  basketCarts[indexBasket].ammount = basketCarts[indexBasket].ammount - 1;
-  contetRef.innerHTML = `  <p>${basketCarts[indexBasket].ammount} x </p>`;
+  basketCarts[indexBasket].amount = basketCarts[indexBasket].amount - 1;
+  contetRef.innerHTML = `  <p>${basketCarts[indexBasket].amount} x </p>`;
 
   let currentPrice = document.getElementById(`changePrice${indexBasket}`);
   currentPrice.innerHTML = "";
-  let sum = basketCarts[indexBasket].ammount * basketCarts[indexBasket].price;
+  let sum = basketCarts[indexBasket].amount * basketCarts[indexBasket].price;
   currentPrice.innerHTML += sum + "€";
 
-  if (basketCarts[indexBasket].ammount < 1) {
+  if (basketCarts[indexBasket].amount < 1) {
     let basketCart = basketCarts[indexBasket];
     basketCarts.splice(basketCart, 1);
     console.log(basketCarts[indexBasket]);
     renderBasket();
   }
 }
+
+console.log(finalSum);

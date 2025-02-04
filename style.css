@@ -76,7 +76,8 @@ header {
   width: 100%;
   height: 150px;
   object-fit: cover;
-}
+  filter: drop-shadow(2px 2px 2px orange);
+} 
 .content-container nav {
   display: flex;
   align-items: center;
