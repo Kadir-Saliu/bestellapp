@@ -32,7 +32,7 @@ header {
 
 .content-container {
   width: calc(100% - 308px);
-  height: 1550px;
+  
   padding: 16px;
  
   
@@ -70,3 +70,11 @@ header {
 .menu:hover {
   background-color: red;
 }
+
+footer{
+  background-color: orange;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+};
